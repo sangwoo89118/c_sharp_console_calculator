@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace c_sharp_console_calculator
 {
@@ -17,6 +14,10 @@ namespace c_sharp_console_calculator
             string userInput = string.Empty;
             // int - output
             int output = 0;
+            // int[] - negative numbers 
+            List<int> negativeNums = new List<int>();
+            // string[] - valid numbers                                                  
+            List<int> validNums = new List<int>();
 
             // display welcome message
             Console.WriteLine("C# Console Application by Sangwoo Kim\n");
@@ -39,67 +40,10 @@ namespace c_sharp_console_calculator
             Console.WriteLine("Please enter numbers with comma or custome delimiter as shown in instruction above");
             userInput = Console.ReadLine();
 
-            List<string> delimiterString = new List<string>(new string[] { ",", "\\n", "\n" });
-
-            // if user input custome delimiter
-            if (userInput.IndexOf("//") == 0)
-            {
-                string customDelimiter = userInput.Substring(2, userInput.IndexOf("\\n") - 2);
-                string[] customDelimiterArray = customDelimiter.Split(new string[] { "]" }, StringSplitOptions.RemoveEmptyEntries);
-
-                for (int i = 0; i < customDelimiterArray.Count(); i++)
-                {
-                    //add it to delimiterString 
-                    delimiterString.Add(customDelimiterArray[i].Replace("[", string.Empty));
-                }
-
-                userInput = userInput.Substring(userInput.IndexOf("\\n"));
-            }
-
-
-            // parse user input into an array of strings for each numbers  
-            string[] numbers = userInput.Split(delimiterString.ToArray(), StringSplitOptions.RemoveEmptyEntries);
-
-            // int[] - negative numbers 
-            List<int> negativeNums = new List<int>();
-
-            // string[] - valid numbers                                                  
-            List<int> validNums = new List<int>();
-
-            // loop thru array of strings 
-            for (int i = 0; i < numbers.Count(); i++)
-            {
-                int num = 0;
-                // validate the number, skip if it's not a number
-                if (int.TryParse(numbers[i], out num))
-                {
-                    // store all negative numbers
-                    if (num < 0)
-                    {
-                        negativeNums.Add(num);
-                    }
-                    // store 0 to valid numbers when number is greater than 1000
-                    else if (num > 1000)
-                    {
-                        validNums.Add(0);
-                        continue;
-                    }
-
-                    // store numbers to valid numbers
-                    validNums.Add(num);
-                    // add each number to output
-                    output += num;
-                }
-                // if not a number
-                else
-                {
-                    // store 0 to valid numbers 
-                    validNums.Add(0);
-                }
-            }
+            Calculator.Library.Calculator.Calculation(userInput, out output, out negativeNums, out validNums);
 
             // deny negative numbers
-            if (negativeNums.Count() > 0)
+            if (negativeNums.Count < 0)
             {
                 Console.WriteLine("Negative numbers are not supported [{0}]", string.Join(",", negativeNums));
             }
