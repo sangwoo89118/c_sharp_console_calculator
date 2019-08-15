@@ -10,7 +10,7 @@ namespace c_sharp_console_calculator
     {
         static void Main(string[] args)
         {
-            // Requirement #3 - implementation
+            // Requirement #7 - implementation
 
             /// decalre variables
             // string - user input
@@ -29,21 +29,21 @@ namespace c_sharp_console_calculator
             Console.WriteLine("Invalid/Missing numbers should be converted to 0 e.g. \"\" will return 0; \"5,tytyt\" will return 5");
             Console.WriteLine("Deny negative numbers. An exception will be thrown that includes all of the negative numbers provided");
             Console.WriteLine("Ignore any number greater than 1000 e.g. \"2,1001,6\" will return 8");
-            Console.WriteLine("Support a single custom delimiter");
-            Console.WriteLine("\tuse the format: \"//{delimiter}\\n{numbers}\" e.g. \"//;\\n2;5\" will return 7\n\n");
-
+            Console.WriteLine("Support delimiters of any length");
+            Console.WriteLine("\tuse the format: \"//{delimiter}\\n{numbers}\" e.g. \"//[***]\\n111***22***33\" will return 66\n\n");
 
             // store user input
-            Console.WriteLine("Please enter numbers with comma e.g. 1,20 or a single custom delimiter e.g. //;\\n2;5\n");
+            Console.WriteLine("Please enter numbers with comma e.g. 1,20 or a custom delimiter of any length e.g. \"//[***]\\n111***22***33\"");
             userInput = Console.ReadLine();
-                                     
+
             List<string> delimiterString = new List<string>(new string[] { ",", "\\n", "\n" });
 
             // if user input custome delimiter
             if (userInput.IndexOf("//") == 0)
             {
-                //add it to delimiterString
-                delimiterString.Add(userInput[2].ToString()); 
+                //add it to delimiterString        
+                string customDelimiter = userInput.Substring(2, userInput.IndexOf("\\n") - 2).Replace("[", string.Empty).Replace("]", string.Empty);
+                delimiterString.Add(customDelimiter);
             }
 
             // parse user input into an array of strings for each numbers  
