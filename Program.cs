@@ -10,7 +10,7 @@ namespace c_sharp_console_calculator
     {
         static void Main(string[] args)
         {
-            // Requirement #1 - implementation
+            // Requirement #3 - implementation
 
             /// decalre variables
             // string - user input
@@ -23,17 +23,19 @@ namespace c_sharp_console_calculator
 
             // display instruction
             Console.WriteLine("This calculator only supports an Add operation given a signle formatted string");
-            Console.WriteLine("Supports a maximum of 2 numbers");
+            Console.WriteLine("Supports more than 2 numbers");
             Console.WriteLine("Use a comma delimited format e.g. \"1,20\" will return 21");
+            Console.WriteLine("Supports a newline character as an alternative delimiter e.g. \"1\\n2,3\" will return 6");
             Console.WriteLine("Invalid/Missing numbers should be converted to 0 e.g. \"\" will return 0; \"5,tytyt\" will return 5\n\n");
 
             // store user input
-            Console.WriteLine("Please enter 2 numbers with comma e.g. 1,20\n");
+            Console.WriteLine("Please enter numbers with comma e.g. 1,20\n");
             userInput = Console.ReadLine();
 
             // parse user input into an array of strings for each numbers
-            string[] numbers = userInput.Split(',');
-
+            string[] delimiterString = { ",", "\\n", "\n" };
+            string[] numbers = userInput.Split(delimiterString, StringSplitOptions.None);
+            
             // loop thru array of strings 
             for (int i = 0; i < numbers.Count(); i++)
             {
