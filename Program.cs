@@ -10,7 +10,7 @@ namespace c_sharp_console_calculator
     {
         static void Main(string[] args)
         {
-            // Stretch goal #1 - implementation
+            // Stretch goal #2 - implementation
 
             /// decalre variables
             // string - user input
@@ -112,8 +112,16 @@ namespace c_sharp_console_calculator
 
             // press any key to exit
             Console.WriteLine("\n");
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
+            Console.WriteLine("Press ESC to exit");
+
+            while (true)
+            {
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
     }
 }
