@@ -35,7 +35,10 @@ namespace c_sharp_console_calculator
             // parse user input into an array of strings for each numbers
             string[] delimiterString = { ",", "\\n", "\n" };
             string[] numbers = userInput.Split(delimiterString, StringSplitOptions.None);
-            
+
+            // int[] - negative numbers 
+            List<int> negativeNums = new List<int>();
+
             // loop thru array of strings 
             for (int i = 0; i < numbers.Count(); i++)
             {
@@ -43,14 +46,26 @@ namespace c_sharp_console_calculator
                 // validate the number, skip if it's not a number
                 if (int.TryParse(numbers[i], out num))
                 {
+                    // store all negative numbers
+                    if (num < 0)
+                    {
+                        negativeNums.Add(num);
+                    }
                     // add each number to output
                     output += num;
                 }
-
             }
 
-            // display output
-            Console.WriteLine("Result is " + output);
+            // deny negative numbers
+            if (negativeNums.Count() > 0)
+            {
+                Console.WriteLine("Negative numbers are not supported [{0}]", string.Join(",", negativeNums));
+            }
+            else
+            {
+                // display output
+                Console.WriteLine("Result is " + output);
+            }
 
             // press any key to exit
             Console.WriteLine("\n");
