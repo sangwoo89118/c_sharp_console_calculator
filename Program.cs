@@ -51,6 +51,11 @@ namespace c_sharp_console_calculator
                     {
                         negativeNums.Add(num);
                     }
+                    // ignore any number greater than 1000
+                    else if (num > 1000)
+                    {
+                        continue;
+                    }
                     // add each number to output
                     output += num;
                 }
