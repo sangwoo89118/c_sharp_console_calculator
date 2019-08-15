@@ -10,7 +10,7 @@ namespace c_sharp_console_calculator
     {
         static void Main(string[] args)
         {
-            // Requirement #8 - implementation
+            // Stretch goal #1 - implementation
 
             /// decalre variables
             // string - user input
@@ -45,20 +45,26 @@ namespace c_sharp_console_calculator
             if (userInput.IndexOf("//") == 0)
             {
                 string customDelimiter = userInput.Substring(2, userInput.IndexOf("\\n") - 2);
-                string[] customDelimiterArray = customDelimiter.Split(']');
+                string[] customDelimiterArray = customDelimiter.Split(new string[] { "]" }, StringSplitOptions.RemoveEmptyEntries);
 
                 for (int i = 0; i < customDelimiterArray.Count(); i++)
                 {
                     //add it to delimiterString 
                     delimiterString.Add(customDelimiterArray[i].Replace("[", string.Empty));
                 }
+
+                userInput = userInput.Substring(userInput.IndexOf("\\n"));
             }
+
 
             // parse user input into an array of strings for each numbers  
             string[] numbers = userInput.Split(delimiterString.ToArray(), StringSplitOptions.RemoveEmptyEntries);
 
             // int[] - negative numbers 
             List<int> negativeNums = new List<int>();
+
+            // string[] - valid numbers                                                  
+            List<int> validNums = new List<int>();
 
             // loop thru array of strings 
             for (int i = 0; i < numbers.Count(); i++)
@@ -72,13 +78,23 @@ namespace c_sharp_console_calculator
                     {
                         negativeNums.Add(num);
                     }
-                    // ignore any number greater than 1000
+                    // store 0 to valid numbers when number is greater than 1000
                     else if (num > 1000)
                     {
+                        validNums.Add(0);
                         continue;
                     }
+
+                    // store numbers to valid numbers
+                    validNums.Add(num);
                     // add each number to output
                     output += num;
+                }
+                // if not a number
+                else
+                {
+                    // store 0 to valid numbers 
+                    validNums.Add(0);
                 }
             }
 
@@ -90,7 +106,8 @@ namespace c_sharp_console_calculator
             else
             {
                 // display output
-                Console.WriteLine("Result is " + output);
+                Console.WriteLine("\n");
+                Console.WriteLine(string.Join("+", validNums) + " = " + output);
             }
 
             // press any key to exit
